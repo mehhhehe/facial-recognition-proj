@@ -1,5 +1,5 @@
 # Facial Recognition Project
-CV Project for the Computer Vision Course at GUtech
+CV Project for the Computer Vision course at GUtech
 
 # Installation
 - Clone repo
