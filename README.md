@@ -7,7 +7,7 @@ We have implemented a facial recognition workflow using the Haar Cascade classif
 ## File Overview
 - encoding.py - used to generate encodings of images in the [LFW](http://vis-www.cs.umass.edu/lfw/) dataset, along with other images added to the dataset
 
-- encodings.pkl - pickle file containing (encoding, label) pairs for images; generated with encodings.py
+- encodings.pkl - pickle file containing (encoding, label) pairs for images; generated with encoding.py
 
 - app.py - the Flask app
 
