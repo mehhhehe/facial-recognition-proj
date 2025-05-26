@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Face Authentication</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <!-- Camera Feed -->
+  
+
+  
+
+  <!-- Dimming Overlays around scan box -->
+  <div id="overlay">
+    <div class="dim top"></div>
+    <div class="dim bottom"></div>
+    <div class="dim left"></div>
+    <div class="dim right"></div>
+  </div>
+
+  <div id="scan-frame">
+    <video id="camera" autoplay playsinline></video>
+    <div id="laser"></div>
+    <!-- <img src="{{ url_for('static', filename='images/scan-frame.svg') }}" alt="scan frame"> -->
+
+  </div>
+  
+
+  <!-- Instruction -->
+  <p id="instruction-text">Place your face inside the box and look directly at the camera</p>
+
+  <!-- Status Panel -->
+  <div id="status-panel">
+    <p id="percent">--%</p>
+    <p id="match-name"></p>
+  </div>
+
+  <!-- Result Banner -->
+  <div id="result-banner" class="neutral">
+    <span id="result-text">Scanning…</span>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+</body>
+<script>
+  navigator.mediaDevices.getUserMedia({ video: true })
+  .then(stream => {
+      const video = document.getElementById('camera');
+      video.srcObject = stream;
+  
+      video.onloadedmetadata = () => {
+          // Wait a moment after video starts
+          setTimeout(takeSnapshot, 3000);  // 3-second delay
+      };
+  });
+  
+  function takeSnapshot() {
+      const video = document.getElementById('camera');
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+  
+      const imageData = canvas.toDataURL('image/jpeg');
+      fetch('/authenticate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: imageData })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const percent = document.getElementById("percent");
+        const matchName = document.getElementById("match-name");
+        const banner = document.getElementById("result-banner");
+        const resultText = document.getElementById("result-text");
+
+        percent.textContent = data.similarity.toFixed(2) + "%";
+        matchName.textContent = data.person;
+
+        if (!data.match) {
+          
+          resultText.textContent = data.reason;
+          
+        }
+
+        if (data.match) {
+            
+            resultText.textContent = "Match found";
+
+            // Step 1: Show UI updates first
+            setTimeout(() => {
+                // Step 2: Tell backend we're authorized
+                fetch("/authorize", { 
+                  method: "POST", 
+                  headers: { "Content-Type": "application/json" },
+                  body   : JSON.stringify({ person: data.person })
+                })
+                .then(() => {
+                    // Step 3: Redirect AFTER a pause (e.g. 2 seconds)
+                    setTimeout(() => {
+                        window.location.href = "/dashboard";
+                    }, 2000);
+                });
+            }, 100);  // short pause before continuing
+        }
+    });
+}
+</script>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Documents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}" defer></script>
+</head>
+<body class="dashboard-page">
+    <header>
+        <h1>My Documents</h1>
+        <div id="clock"></div>
+        <a href="/" class="logout-btn">LOG OUT</a>
+    </header>
+
+    <main>
+        <h2>Welcome Back <span class="username">{{ username }}</span>!</h2>
+
+        {% for d in docs %}
+        <a href="{{ url_for('document', doc_id=d.id) }}" class="doc-card">
+            <i class="icon"></i>
+            <span>{{ d.name }}</span>
+        </a>
+        {% endfor %}
+    </main>
+</body>
+</html>

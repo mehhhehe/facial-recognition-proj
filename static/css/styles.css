@@ -1,0 +1,179 @@
+/* ==== Reset ==== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+  font-family: system-ui, Arial, sans-serif;
+  background-color: #000;
+}
+
+/* ==== Camera ==== */
+#camera {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  z-index: -1;
+}
+
+/* ==== Scan Box ==== */
+#scan-frame {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 550px;
+  z-index: 10;
+  position: relative;
+}
+
+#scan-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 1; /* on top of the laser */
+}
+
+
+
+/* ==== Laser Line ==== */
+#laser {
+  position: absolute;
+  top: 10%;
+  /* left: 8%; */
+  width: 100%;
+  height: 5px;
+  background: rgb(255, 0, 0);
+  box-shadow: 0 0 15px 5px rgb(255, 0, 0);
+  animation: moveLaser 5s ease-in-out infinite;
+  z-index: 0; /* under the image */
+}
+
+@keyframes moveLaser {
+  0%   { top: 0%; }
+  50%  { top: 100%; }
+  100% { top: 0%; }
+}
+
+/* ==== Dimming Overlays ==== */
+#overlay .dim {
+  position: fixed;
+  background: rgba(10, 30, 60, 0.95); /* strong blue dim */
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Match scan box (400w x 500h => 200, 250) */
+#overlay .top {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(50vh - 250px);
+}
+#overlay .bottom {
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(50vh - 250px);
+}
+#overlay .left {
+  top: calc(50vh - 250px);
+  left: 0;
+  width: calc(50vw - 200px);
+  height: 500px;
+}
+#overlay .right {
+  top: calc(50vh - 250px);
+  right: 0;
+  width: calc(50vw - 200px);
+  height: 500px;
+}
+
+/* ==== Instruction Text ==== */
+#instruction-text {
+  position: fixed;
+  top: calc(50% + 300px);  /* below the 230px half height + space */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(0,0,0,0.8);
+  z-index: 10;
+}
+
+/* ==== Status Panel ==== */
+#status-panel {
+  position: fixed;
+  top: 50%;
+  left: calc(60% + 200px); /* 200 + padding from box center */
+  transform: translateY(-50%);
+  text-align: center;
+  color: white;
+  z-index: 10;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+#percent {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+#match-name {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* ==== Result Banner ==== */
+#result-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  font-weight: bold;
+  font-size: 1.8rem;
+  z-index: 10;
+}
+#result-banner.neutral     { background: #222; color: #fff; }
+#result-banner.authorized  { background: #0b9e4b; color: #fff; }
+#result-banner.unauthorized{ background: #b80011; color: #fff; }
+
+/* ===== DASHBOARD ===== */
+header{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1rem 2rem;
+  background:linear-gradient(90deg,#c0f1d7,#6ebdf2);
+  color:#002;
+}
+.logout-btn{
+  background:#fff; padding:.4rem 1rem; border-radius:20px; font-size:.8rem;
+  text-decoration:none; color:#222; border:1px solid #ccc;
+}
+main{padding:2rem;}
+.username{font-weight:bold;}
+
+.doc-card{
+  display:flex; align-items:center;
+  background:#f8f8f8; margin:.8rem 0; padding:1rem; border-radius:10px;
+  text-decoration:none; color:#222; box-shadow:0 1px 3px rgba(0,0,0,.15);
+  transition:transform .2s;
+}
+.doc-card:hover{transform:translateY(-3px);}
+.doc-card .icon{
+  width:24px; height:32px; background:#444;margin-right:1rem; border-radius:4px;
+}
+
+/* ===== DOC VIEW ===== */
+.doc-view header{padding:1rem 2rem; background:#eee; display:flex; align-items:center;}
+.doc-view .back{margin-right:1rem; text-decoration:none;}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ doc.name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="doc-view">
+  <header>
+      <a href="{{ url_for('dashboard') }}" class="back">&larr; Back</a>
+      <h1>{{ doc.name }}</h1>
+  </header>
+
+  <main>
+    <p>This is where you could embed / download the actual file.</p>
+  </main>
+</body>
+</html>
