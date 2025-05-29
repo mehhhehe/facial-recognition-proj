@@ -19,3 +19,5 @@ We have implemented a facial recognition workflow using the Haar Cascade classif
 pip install -r requirements.txt
 flask run
 ```
+
+Note: The wheel file included is windows-specific. Please download the appropriate wheel files if you use macOS or Linux.
