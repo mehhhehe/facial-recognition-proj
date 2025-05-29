@@ -20,4 +20,4 @@ pip install -r requirements.txt
 flask run
 ```
 
-Note: The wheel file included is windows-specific. Please download the appropriate wheel files if you use macOS or Linux.
+Note: The wheel file included is Windows-specific. Please download the appropriate wheel files if you use macOS or Linux.
