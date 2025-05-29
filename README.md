@@ -1,5 +1,5 @@
 # Facial Recognition - AI 4 570
-CV Project for the Computer Vision course at GUtech
+Final project for the Computer Vision course at GUtech
 
 ## Introduction 
 We have implemented a facial recognition workflow using the Haar Cascade classifier for facial detection and the facial_recognition library (which utilises dlib's ResNet-34 encoder architecture). 
